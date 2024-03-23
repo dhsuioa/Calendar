@@ -14,6 +14,10 @@
             {{ $t('weekdays.' + weekday) }}
         </div>
         <div
+            v-for="emptyCell in firstDayOffset"
+            :key="'empty' + emptyCell"
+            class="day"/>
+        <div
             v-for="day in days"
             :key="day"
             @click="selectDate(day)"
@@ -29,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { onMounted, ref } from 'vue'
 
 const props = defineProps ({
@@ -51,6 +56,10 @@ const getCurrentMonthDays = (year: number, month: number): number[] => {
     const dayInMonth = new Date(year, month, 0).getDate()
     return Array.from({length: dayInMonth}, (_, index) => index + 1)
 }
+
+const firstDayOffset = computed(() => {
+    return (new Date(currentYear.value, currentMonth.value - 1, 1).getDay() + 6) % 7
+})
 
 const updateCalendar = () => {
     if (props.initialDate) {
