@@ -1,8 +1,12 @@
 <template>
   <button @click="changeLangue('en')">English</button>
   <button @click="changeLangue('ru')">Русский</button>
-<Calendar/>
-<Calendar initial-date="2022-11-10"/>
+  <div class="container">
+    <Calendar/>
+  </div>
+  <div class="container">
+    <Calendar initial-date="2022-11-10"/>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -17,4 +21,14 @@ const changeLangue = (lang: string) => {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button {
+  margin: 20px;
+}
 </style>

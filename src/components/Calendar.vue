@@ -21,7 +21,7 @@
             v-for="day in days"
             :key="day"
             @click="selectDate(day)"
-            :class="{ 'day': true, 'selected' : selectedDate === day}"
+            :class="{ 'day': true, 'selected': selectedDate === day, 'weekend': isWeekend(day) }"
         >
             {{ day }}
         </div>
@@ -90,6 +90,11 @@ const selectDate = (day: number) => {
     selectedDate.value = day
 }
 
+const isWeekend = (day: number): boolean => {
+    const weekday = new Date(currentYear.value, currentMonth.value - 1, day).getDay()
+    return [0, 6].includes(weekday)
+}
+
 onMounted(() => {
     updateCalendar()
 })
@@ -116,6 +121,10 @@ onMounted(() => {
     margin: 0 10px;
 }
 
+button:hover {
+    background-color: #e2e3f8;
+}
+
 .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -133,6 +142,10 @@ onMounted(() => {
 
 .day.selected {
     background-color: lightblue;
+}
+
+.weekend {
+    color: red;
 }
 
 .weekdays {
